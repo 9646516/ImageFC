@@ -31,7 +31,7 @@ void imageFC::resize(const std::vector<std::vector<float>> &src, std::vector<std
 }
 
 
-imageFC::imageFeature *
+std::unique_ptr<imageFC::imageFeature>
 imageFC::extractFeature(const std::vector<std::vector<float>> &R, const std::vector<std::vector<float>> &G,
                         const std::vector<std::vector<float>> &B) {
     std::vector<std::vector<std::vector<int>>> lab;
@@ -66,7 +66,7 @@ imageFC::extractFeature(const std::vector<std::vector<float>> &R, const std::vec
     }
     std::vector<float> hog;
     HOG::encode(Gray, hog);
-    auto *ret = new imageFeature();
+    std::unique_ptr<imageFeature> ret = std::make_unique<imageFeature>();
     ret->hist = std::move(lab);
     ret->HOG = std::move(hog);
     return ret;
@@ -147,7 +147,7 @@ imageFC::imread(const char *sb, std::vector<std::vector<float>> &R, std::vector<
     stbi_image_free(raw);
 }
 
-std::pair<float, float> imageFC::calcDistance(imageFeature *x, imageFeature *y) {
+std::pair<float, float> imageFC::calcDistance(std::unique_ptr<imageFC::imageFeature> x, std::unique_ptr<imageFC::imageFeature> y) {
     try {
         float dis1 = calcEMDDistance(x->hist, y->hist);
         float dis2 = calcCosDistance(x->HOG, y->HOG);
@@ -166,9 +166,10 @@ std::pair<float, float> imageFC::imageFC(const char *lhs, const char *rhs) {
         for (auto i: {&r1, &r2, &g1, &g2, &b1, &b2}) {
             resize(*i, *i, 128, 128);
         }
-        auto *f1 = extractFeature(r1, g1, b1);
-        auto *f2 = extractFeature(r2, g2, b2);
-        return calcDistance(f1, f2);
+        auto f1 = extractFeature(r1, g1, b1);
+        auto f2 = extractFeature(r2, g2, b2);
+        auto ret = calcDistance(std::move(f1), std::move(f2));
+        return ret;
     } catch (std::exception &e) {
         throw e;
     }

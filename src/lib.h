@@ -28,7 +28,7 @@ namespace imageFC {
         std::vector<float> HOG;
     };
 
-    IMAGE_FC_API imageFeature *
+    IMAGE_FC_API std::unique_ptr<imageFC::imageFeature>
     extractFeature(const std::vector<std::vector<float>> &R, const std::vector<std::vector<float>> &G,
                    const std::vector<std::vector<float>> &B);
 
@@ -41,7 +41,7 @@ namespace imageFC {
     IMAGE_FC_API void
     imread(const char *sb, std::vector<std::vector<float>> &R, std::vector<std::vector<float>> &G, std::vector<std::vector<float>> &B);
 
-    IMAGE_FC_API std::pair<float, float> calcDistance(imageFeature *lhs, imageFeature *rhs);
+    IMAGE_FC_API std::pair<float, float> calcDistance(std::unique_ptr<imageFC::imageFeature> lhs, std::unique_ptr<imageFC::imageFeature> rhs);
 
     IMAGE_FC_API  std::pair<float, float> imageFC(const char *lhs, const char *rhs);
 

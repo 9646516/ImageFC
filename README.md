@@ -5,10 +5,11 @@ Histogram of Oriented Gradient to check grayscale similarity
 
 RGB Histogram to check color similarity
 
-#### Example
+## Example
 
 Please see examples folder
 
-#### Licence
+## Licence
 
 MIT
+
