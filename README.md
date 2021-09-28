@@ -13,6 +13,8 @@ Please see examples folder
 
 [An Efficient Earth Mover’s Distance Algorithm for Robust Histogram Comparison](https://bidal.sfsu.edu/~kazokada/research/okada_ieeepami06_emdl1.pdf)
 
+[Efficient color histogram indexing for quadratic form distance functions](https://ieeexplore.ieee.org/document/391417)
+
 [Histograms of Oriented Gradients for Human Detection](https://lear.inrialpes.fr/people/triggs/pubs/Dalal-cvpr05.pdf)
 
 ## Licence
