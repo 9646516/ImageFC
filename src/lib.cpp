@@ -1,5 +1,11 @@
 #include "lib.h"
 
+#if ((defined(_MSVC_LANG) && _MSVC_LANG >= 202002L) || __cplusplus >= 202002L)
+#define lerp(a, b, t) std::lerp(a,b,t)
+#else
+#define lerp(a, b, t) ((a)+t*((b)-(a)))
+#endif
+
 void imageFC::resize(const std::vector<std::vector<float>> &src, std::vector<std::vector<float>> &dst, int row, int col) {
     std::vector<std::vector<float>> _dst;
     int srcRow = (int) src.size();
@@ -20,10 +26,9 @@ void imageFC::resize(const std::vector<std::vector<float>> &src, std::vector<std
             if (y1 >= srcCol)y1 = y0;
             float ox = posX - x0;
             float oy = posY - y0;
-            float topInterpolationResult = std::lerp(static_cast<float>(src[x0][y0]), src[x0][y1], oy);
-            float bottomInterpolationResult = std::lerp(static_cast<float>(src[x1][y0]), src[x1][y1], oy);
-            float res = std::lerp(topInterpolationResult, bottomInterpolationResult, ox);
-//            res = std::round(res);
+            float topInterpolationResult = lerp(static_cast<float>(src[x0][y0]), src[x0][y1], oy);
+            float bottomInterpolationResult = lerp(static_cast<float>(src[x1][y0]), src[x1][y1], oy);
+            float res = lerp(topInterpolationResult, bottomInterpolationResult, ox);
             _dst[i][j] = res;
         }
     }
@@ -32,8 +37,10 @@ void imageFC::resize(const std::vector<std::vector<float>> &src, std::vector<std
 
 
 std::unique_ptr<imageFC::imageFeature>
-imageFC::extractFeature(const std::vector<std::vector<float>> &R, const std::vector<std::vector<float>> &G,
-                        const std::vector<std::vector<float>> &B) {
+imageFC::extractFeature(const std::vector<std::vector<float>> &R,
+                        const std::vector<std::vector<float>> &G,
+                        const std::vector<std::vector<float>> &B
+) {
     std::vector<std::vector<std::vector<int>>> lab;
     rgbHist::encode(R, G, B, lab);
 

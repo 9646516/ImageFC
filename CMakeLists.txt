@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.20)
 project(ImageFC)
 
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 11)
 
 add_library(
         ImageFC SHARED
@@ -10,6 +10,8 @@ add_library(
         src/color/rgbHist.cpp
         src/flow/mcmf.cpp
 )
+add_executable(simple examples/simple.cpp)
+target_link_libraries(simple ImageFC)
 
-add_executable(examples examples/example.cpp)
-target_link_libraries(examples ImageFC)
+add_executable(batch examples/batch.cpp)
+target_link_libraries(batch ImageFC)

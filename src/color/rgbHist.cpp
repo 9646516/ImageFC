@@ -7,7 +7,7 @@ void rgbHist::encode(const std::vector<std::vector<float>> &R,
                      const std::vector<std::vector<float>> &B,
                      std::vector<std::vector<std::vector<int>>> &dst
 ) {
-    const int binSize = 40;
+    const int binSize = 42;
     const float K = 255.0f / binSize;
     const int numberOfBins = 255 / binSize;
     const int row = (int) R.size();

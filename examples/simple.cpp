@@ -6,8 +6,9 @@
 
 int main() {
     try {
-        auto[color, grad]=imageFC::imageFC("E:\\img\\l1.jpg", "E:\\img\\l2.jpg");
-        std::cout << color << ' ' << grad << std::endl;
+        auto x = imageFC::imageFC("E:\\img\\3.jpg", "E:\\img\\5.jpg");
+        std::cout << "color = " << x.first << std::endl;
+        std::cout << "grad = " << x.second << std::endl;
     } catch (std::exception &e) {
         std::cout << e.what() << std::endl;
     }

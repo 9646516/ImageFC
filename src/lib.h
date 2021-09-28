@@ -16,12 +16,15 @@
 #include <immintrin.h>
 #include "flow/mcmf.h"
 
-#ifdef IMPORT_SIFT_DLL
-#define IMAGE_FC_API __declspec(dllimport)
+#ifdef WIN32
+    #ifdef IMPORT_SIFT_DLL
+    #define IMAGE_FC_API __declspec(dllimport)
+    #else
+    #define IMAGE_FC_API __declspec(dllexport)
+    #endif
 #else
-#define IMAGE_FC_API __declspec(dllexport)
+    #define IMAGE_FC_API
 #endif
-
 namespace imageFC {
     struct imageFeature {
         std::vector<std::vector<std::vector<int>>> hist;
