@@ -53,5 +53,6 @@ bool MCMF::SPFA(int S, int T, int &flow, int &cost) {
 int MCMF::MinCost(int S, int T) {
     int flow = 0, cost = 0;
     while (SPFA(S, T, flow, cost));
-    return cost;
+    if (!flow)return 1e9;
+    else return cost;
 }

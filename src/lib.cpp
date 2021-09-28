@@ -124,8 +124,9 @@ float imageFC::calcCosDistance(std::vector<float> &lhs, std::vector<float> &rhs)
         }
         s1 = std::sqrt(s1);
         s2 = std::sqrt(s2);
-        auto cos = float(ret / s1 / s2);
-        return cos;
+        if (std::abs(s1) < 1e-4 && std::abs(s2) < 1e-4)return 1;
+        else if (std::abs(s1) > 1e-4 && std::abs(s2) > 1e-4)return float(ret / s1 / s2);
+        else return 0;
     }
 }
 
