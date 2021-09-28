@@ -19,5 +19,4 @@ struct MCMF {
     int MinCost(int S, int T);
 };
 
-
 #endif
